@@ -5,17 +5,17 @@ for ((i=1;i<701;i++))
    num=$((RANDOM%6+1))
  case $num in
 '1')
-let "ones+=1";;
+let "ones++";;
 "2")
-let "twos+=1";;
+let "twos++";;
 '3')
-let "threes+=1";;
+let "threes++";;
 '4')
-let "fours+=1";;
+let "fours++";;
 '5')
-let "fives+=1";;
+let "fives++";;
 '6')
-let "sixes+=1";;
+let "sixes++";;
  esac
 done
 echo "единиц	 =	$ones"
