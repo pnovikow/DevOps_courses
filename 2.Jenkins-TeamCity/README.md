@@ -1,2 +1,1 @@
-# Put header here
-Put description here
+Add solution tasks "Staging" 3.Ansible
