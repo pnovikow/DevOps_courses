@@ -1,4 +1,5 @@
 # Working...
+Oleg Vlaskin - My telegram: @qnsi337
 
 #Process сompleting task 1.Containers-VMs
 +1.1.Vagrant+Packer 
@@ -22,3 +23,4 @@
 #Process сompleting 7.Azure
 
 #Process сompleting 8.Extras
+
