@@ -1,6 +1,6 @@
-#2.9  Working with Kubernetes
+# 2.9  Working with Kubernetes
 
-#2.9.1 install minikube
+# 2.9.1 install minikube
 
 	# install kubectl
 	
@@ -17,7 +17,7 @@
 	$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
 	  && chmod +x minikube
  
-#2.9.2 create namespace for deploy simple web program
+# 2.9.2 create namespace for deploy simple web program
 
 	$ minikube start --vm-driver=virtualbox
 	
@@ -27,16 +27,16 @@
 	
 	$ kubectl expose deployment web --type=NodePort --port=8080
 	
-#2.9.3 create deployments file for install with Kubernetes
+# 2.9.3 create deployments file for install with Kubernetes
 
 	#create and setting file pod-nginx.yaml
 	
 	$ kubectl create -f pod-nginx.yaml
 
-#2.9.4 install ingress
+# 2.9.4 install ingress
 
 	$ minikube addons enable ingress
 
-#2.9.5 create and install ingress rule
+# 2.9.5 create and install ingress rule
 
 	#setting example.ingress.yaml
