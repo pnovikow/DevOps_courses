@@ -1,6 +1,6 @@
 #install packer,vagrant,virtualbox
 
-#2.1 create box with packer
+# 2.1 create box with packer
 
 	#create and setting ubuntu1804.json file
 
@@ -12,7 +12,7 @@
 	
 	$ packer build ubuntu1804.json
 
-#2.2 run VM
+# 2.2 run VM
 
 	$ packer build ubuntu-18.04.1.box.json
 	
@@ -24,7 +24,7 @@
 	
 	$vagrant ssh
 
-2.3 add chef 
+# 2.3 add chef 
 	#install chef,ruby
 	
 	$ gem install bundler
@@ -71,11 +71,11 @@
 	
 	#setting vagrant file
 
-#2.4 setting port
+# 2.4 setting port
 
 	open virtual box and set port
 
-#2.5 create pattern VM with install mariadb
+#2 .5 create pattern VM with install mariadb
 
 	#add cookbook to cheffile
 	
