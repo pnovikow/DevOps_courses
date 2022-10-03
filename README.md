@@ -1,2 +1,2 @@
 # DevOps_courses
-general structure
+general structure for course
