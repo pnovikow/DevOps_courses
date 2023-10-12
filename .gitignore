@@ -1,10 +1,10 @@
 # Local .terraform directories
 **/.terraform/*
-
+00temp/*
 # .tfstate files
 *.tfstate
 *.tfstate.*
-
+**/.vagrant/**
 # Crash log files
 crash.log
 
