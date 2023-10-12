@@ -1,0 +1,57 @@
+---
+- name: COMMON - install packages and etc...
+  ansible.builtin.debug:
+    msg: "Start.."
+
+- name: COMMON - Set timezone to Europe/Moscow
+  timezone:
+    name: Europe/Moscow
+
+- name: Add the user 'developer'
+  ansible.builtin.user:
+    name: dev
+    comment: dev
+    shell: /bin/bash
+
+- name: "Add authorized keys"
+  authorized_key:
+    user: dev
+    state: present
+    key: "{{ lookup('file', '../../dev_rsa.pub') }}"
+    
+- name: COMMON - Add Ubuntu  Repository
+  apt_repository:
+    repo: deb http://ru.archive.ubuntu.com/ubuntu/ bionic universe
+    state: present
+  become: yes
+
+- name: COMMON - Update and upgrade apt packages
+  apt:
+    update_cache: yes
+    upgrade: 'yes'
+    cache_valid_time: 186400 #2days
+  become: yes
+
+- name: COMMON - Install required system packages
+  apt: name={{ apps_install }} state=present cache_valid_time=86400
+  become: yes
+
+- name: COMMON - Set a hostname
+  hostname:
+    name: "{{ domain_name_short }}"
+  become: yes
+
+- name: COMMON -Crontab add sync time
+  cron:
+    name: "time"
+    state: present
+    minute: "*"
+    hour: "23"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "ntpdate time1.google.com > /dev/null"
+
+- name: COMMON create tmp file
+  shell: str=$(date) && echo $str > /tmp/file.txt
+  ignore_errors: true

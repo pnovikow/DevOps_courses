@@ -1,0 +1,12 @@
+server {
+       listen 80;
+       listen [::]:80;
+       root /var/www/html/
+
+       access_log  /var/log/nginx/localhost.access.log;
+
+       location / {
+               index  index.html index.htm;
+       }
+}
+

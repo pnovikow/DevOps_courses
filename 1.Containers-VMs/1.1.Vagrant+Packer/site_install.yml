@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: false
+  vars_files:
+    - vars/common-vars.yml
+  roles:
+    - role: common
+      tags:
+        - install
+        - common
+    - role: nginx
+      tags:
+        - install
+        - nginx
+   
