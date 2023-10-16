@@ -1,6 +1,5 @@
 # DevOps_courses
 
-## 0.BASH-scripts
-https://github.com/banoleb/DevOps_courses/blob/dev/0.Bash-scripts/README.md
-
-## 1.VAGRANT-Packer
+## Ready tasks:
+1) :white_check_mark: 0.BASH-scripts **(tasks: 1.1 - 1.13)**
+2) :white_check_mark: 1.Containers-VMs **(tasks: 2.1 -2.6)**
