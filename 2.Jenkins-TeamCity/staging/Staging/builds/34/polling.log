@@ -1,0 +1,14 @@
+Started on Aug 16, 2021, 7:49:10 PM
+Started by event from 140.82.115.154 ⇒ http://35efea381fcb.ngrok.io:8080/github-webhook/ on Mon Aug 16 19:49:07 MSK 2021
+Using strategy: Default
+[poll] Last Built Revision: Revision f18b92612ca15f43f7a4cfbaa0d7ee93d67c41b8 (refs/remotes/origin/staging)
+The recommended git tool is: git
+using credential git-ssh-key
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+using GIT_SSH to set credentials git-ssh-key
+ > git ls-remote -h -- git@github.com:qnsi337/DevOps_courses.git # timeout=10
+Found 6 remote heads on git@github.com:qnsi337/DevOps_courses.git
+[poll] Latest remote head revision on refs/heads/staging is: 3a2b39dd722e1d7aec64d02b83c4109b5b647aef
+Done. Took 1.9 sec
+Changes found

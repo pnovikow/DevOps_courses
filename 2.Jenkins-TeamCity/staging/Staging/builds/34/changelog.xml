@@ -1,0 +1,20 @@
+commit 3a2b39dd722e1d7aec64d02b83c4109b5b647aef
+tree 41d2e9a440673ccac342eb9b8038f4899d6a2d8c
+parent 2515b7b07152cc1ab2c2ceffe4a8e440fe558f6f
+author qnsi337 <oleg20022508@gmail.com> 2021-08-16 19:49:03 +0300
+committer qnsi337 <oleg20022508@gmail.com> 2021-08-16 19:49:03 +0300
+
+    test triger build
+
+
+:100644 100644 b498fd495d6c8b5f1448de6e0c6526b0e91efa55 8337712ea57f00733b5709b27efb3de797e95575 M	2.Jenkins-TeamCity/staging/README.md
+commit 2515b7b07152cc1ab2c2ceffe4a8e440fe558f6f
+tree 88aa0eb7c5eea14785c2da38811a22519404dea3
+parent f18b92612ca15f43f7a4cfbaa0d7ee93d67c41b8
+author qnsi337 <oleg20022508@gmail.com> 2021-08-16 19:47:33 +0300
+committer qnsi337 <oleg20022508@gmail.com> 2021-08-16 19:47:33 +0300
+
+    test triger build
+
+
+:100644 100644 40efacc879fb31a44b5f9bbc5b2fabb3c427b614 b498fd495d6c8b5f1448de6e0c6526b0e91efa55 M	2.Jenkins-TeamCity/staging/README.md
