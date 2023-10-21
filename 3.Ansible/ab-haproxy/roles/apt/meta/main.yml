@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: John Freeman
+  description: Role for configuring the APT package manager.
+  company: GantSign Ltd.
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
+  galaxy_tags:
+    - apt
+    - system
+dependencies: []
