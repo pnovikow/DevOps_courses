@@ -3,6 +3,8 @@
 #### Основной проект на node.js
 1) https://github.com/banoleb/hello_hapi_test1
 
+#### Docker hub 
+1) https://hub.docker.com/r/johnnybravo6/testnpm/tags
 
 #### Сервер приложений на digitalocean http://167.71.11.147/ 
 ![This is a alt text.](./screen_jenkins05.png "This is a sample image.")
