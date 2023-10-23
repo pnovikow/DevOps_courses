@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./jenkins_configuration:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/certs/client:ro
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_CERT_PATH=/certs/client
+
+#90205c0599bd4456b3899c226d2f8b47
+
+#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
+#  ubuntu:
+#    image: ubuntu:focal
+#    volumes:
+#      - /agent_vol:/home/jenkins
+#    networks:
+#      - jenkins
+#    command: ["sleep","infinity"]
+networks:
+  jenkins:
+    driver: bridge

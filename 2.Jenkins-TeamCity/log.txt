@@ -1,0 +1,334 @@
+Started by user admin
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on ubuntu in /home/jenkins/workspace/hello_hapi_test2
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Fetching changes from the remote Git repository
+Checking out Revision 799956de56148e710ddf772d1289535b2058336a (refs/remotes/origin/master)
+Commit message: "Update hello_test.js"
+ > git rev-parse --resolve-git-dir /home/jenkins/workspace/hello_hapi_test2/.git # timeout=10
+ > git config remote.origin.url https://github.com/banoleb/hello_hapi_test1.git # timeout=10
+Fetching upstream changes from https://github.com/banoleb/hello_hapi_test1.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/banoleb/hello_hapi_test1.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 799956de56148e710ddf772d1289535b2058336a # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master 799956de56148e710ddf772d1289535b2058336a # timeout=10
+ > git rev-list --no-walk 799956de56148e710ddf772d1289535b2058336a # timeout=10
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+Building...
+[Pipeline] sh
++ npm install
+
+up to date, audited 242 packages in 2s
+
+26 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+Testing...
+[Pipeline] sh
++ npm test
+
+> hello@1.0.0 test
+> NODE_ENV=test node node_modules/@hapi/lab/bin/lab -v -L -C
+
+Basic HTTP Tests
+  [32m✔[0m [90m1) Greets /hello/homer}  (27 ms)[0m
+  [32m✔[0m [90m2) Greets /hello/Homer%20Simpson}  (3 ms)[0m
+test greetings
+  [32m✔[0m [90m3) greets with name  (3 ms)[0m
+
+
+[32m3 tests complete[0m
+Test duration: 45 ms
+Leaks: [32mNo issues[0m
+Lint:[32m No issues[0m
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (DockerBuild)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker rmi -f johnnybravo6/testnpm:master
+Untagged: johnnybravo6/testnpm:master
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t johnnybravo6/testnpm:master .
+#2 [internal] load .dockerignore
+#2 sha256:58ceca861492ae7501b1e2bc04640715bb981976f8c426def98f3c8d1474520a
+#2 transferring context: 2B 0.0s done
+#2 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 sha256:62b34f77cce600e6833465905521c36c77f0656e1e9d53cdd1e477bb5c78cc29
+#1 transferring dockerfile: 476B 0.0s done
+#1 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:gallium
+#3 sha256:4e4a8eea0756a80eaef3eb1f548c83a8c90f76fee056ff6a5e9fbdab5a5ae5cc
+#3 DONE 1.5s
+
+#4 [1/5] FROM docker.io/library/node:gallium@sha256:f77a1aef2da8d83e45ec990f45df50f1a286c5fe8bbfb8c6e4246c6389705c0b
+#4 sha256:0be8affeb2e140a29d4adc89ef946b99ee5f826a4193035687330698eb6872d8
+#4 DONE 0.0s
+
+#6 [internal] load build context
+#6 sha256:2bac93467aba4baa8eee267bb96e8623edf48f582e9683f46b9659c1bbc41e6d
+#6 transferring context: 690.24kB 0.4s done
+#6 DONE 0.4s
+
+#5 [2/5] WORKDIR /usr/src/app
+#5 sha256:544ad23a240e757e31e4a5a18cf7254b44a45cdf7d9433769dc777dad941b711
+#5 CACHED
+
+#9 [3/5] COPY package*.json ./
+#9 sha256:9033497e07cbb726c302e05eca214047cde6edcaf8808e56ae1521df8eac99be
+#9 CACHED
+
+#8 [4/5] RUN npm install
+#8 sha256:99b9c23c89d382f465a629761908527e20c2803afa78bd60c202d2aa0178999f
+#8 CACHED
+
+#7 [5/5] COPY . .
+#7 sha256:8337b8ce1faff0e12202282bac9a097b9a21038772d65f0e4e59cb64b3e8da71
+#7 DONE 2.5s
+
+#10 exporting to image
+#10 sha256:b3e7078905f1258ea847038517130d84f9c0f72da71cd74487b6548c29ebc077
+#10 exporting layers
+#10 exporting layers 0.4s done
+#10 writing image sha256:77bd40a626a43635f49d23f4a8311773b58478126f35b6bcd6106d0d3b4cc695 done
+#10 naming to docker.io/johnnybravo6/testnpm:master done
+#10 DONE 0.5s
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (DockerPush)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withDockerRegistry
+$ docker login -u johnnybravo6 -p ******** https://registry.hub.docker.com
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /home/jenkins/workspace/hello_hapi_test2@tmp/990fa40e-8dec-4b6d-a8cc-bafaa5dabbc9/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker tag johnnybravo6/testnpm:master registry.hub.docker.com/johnnybravo6/testnpm:master
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker push registry.hub.docker.com/johnnybravo6/testnpm:master
+The push refers to repository [registry.hub.docker.com/johnnybravo6/testnpm]
+e5bb0fe9274b: Preparing
+b826619b258a: Preparing
+2bc177af2c41: Preparing
+cbdef839b9e2: Preparing
+be322b479aee: Preparing
+d41bcd3a037b: Preparing
+fe0d845e767b: Preparing
+f25ec1d93a58: Preparing
+794ce8b1b516: Preparing
+3220beed9b06: Preparing
+684f82921421: Preparing
+d41bcd3a037b: Waiting
+fe0d845e767b: Waiting
+f25ec1d93a58: Waiting
+794ce8b1b516: Waiting
+3220beed9b06: Waiting
+9af5f53e8f62: Preparing
+684f82921421: Waiting
+9af5f53e8f62: Waiting
+be322b479aee: Layer already exists
+2bc177af2c41: Layer already exists
+b826619b258a: Layer already exists
+cbdef839b9e2: Layer already exists
+f25ec1d93a58: Layer already exists
+794ce8b1b516: Layer already exists
+d41bcd3a037b: Layer already exists
+fe0d845e767b: Layer already exists
+684f82921421: Layer already exists
+3220beed9b06: Layer already exists
+9af5f53e8f62: Layer already exists
+e5bb0fe9274b: Pushed
+master: digest: sha256:e03c0a52ac8845d388ba4902cdab168950b16833ae202d79a18f31eff679148c size: 2843
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withDockerRegistry
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (DockerDeploy)
+[Pipeline] sshPublisher
+SSH: Connecting from host [johnlap]
+SSH: Connecting with configuration [ubuntu-vps] ...
+SSH: Creating session: username [jenkins], hostname [167.71.11.147], port [22]
+SSH: Connecting session ...
+SSH: Connected
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [ git -C /home/jenkins/app/hello_hapi_test1/ checkout master ] ...
+SSH: EXEC: connected
+Already on 'master'
+Your branch is up to date with 'origin/master'.
+SSH: EXEC: completed after 201 ms
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [ git -C /home/jenkins/app/hello_hapi_test1/ fetch] ...
+SSH: EXEC: connected
+SSH: EXEC: completed after 801 ms
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [ git -C /home/jenkins/app/hello_hapi_test1/  pull origin master ] ...
+SSH: EXEC: connected
+From https://github.com/banoleb/hello_hapi_test1
+ * branch            master     -> FETCH_HEAD
+Already up to date.
+SSH: EXEC: completed after 601 ms
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [docker-compose -f /home/jenkins/app/hello_hapi_test1//docker-compose.yml -p master down] ...
+SSH: EXEC: connected
+Removing network master_default
+Network master_default not found.
+SSH: EXEC: completed after 1 601 ms
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [docker-compose -f /home/jenkins/app/hello_hapi_test1//docker-compose.yml -p master rm -f] ...
+SSH: EXEC: connected
+No stopped containers
+SSH: EXEC: completed after 1 402 ms
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [docker-compose -f /home/jenkins/app/hello_hapi_test1//docker-compose.yml -p master pull ] ...
+SSH: EXEC: connected
+Pulling web-prod ... 
+Pulling web-prod ... pulling from johnnybravo6/testnpm
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... already exists
+Pulling web-prod ... pulling fs layer
+Pulling web-prod ... downloading (1.0%)
+Pulling web-prod ... downloading (11.2%)
+Pulling web-prod ... downloading (29.2%)
+Pulling web-prod ... downloading (64.5%)
+Pulling web-prod ... verifying checksum
+Pulling web-prod ... download complete
+Pulling web-prod ... extracting (1.4%)
+Pulling web-prod ... extracting (4.3%)
+Pulling web-prod ... extracting (10.1%)
+Pulling web-prod ... extracting (21.6%)
+Pulling web-prod ... extracting (25.9%)
+Pulling web-prod ... extracting (30.2%)
+Pulling web-prod ... extracting (37.4%)
+Pulling web-prod ... extracting (38.9%)
+Pulling web-prod ... extracting (41.8%)
+Pulling web-prod ... extracting (50.4%)
+Pulling web-prod ... extracting (56.2%)
+Pulling web-prod ... extracting (64.8%)
+Pulling web-prod ... extracting (76.3%)
+Pulling web-prod ... extracting (82.1%)
+Pulling web-prod ... extracting (87.9%)
+Pulling web-prod ... extracting (92.2%)
+Pulling web-prod ... extracting (96.5%)
+Pulling web-prod ... extracting (100.0%)
+Pulling web-prod ... pull complete
+Pulling web-prod ... digest: sha256:e03c0a52ac8845d388...
+Pulling web-prod ... status: downloaded newer image fo...
+Pulling web-prod ... done
+SSH: EXEC: completed after 5 405 ms
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [docker-compose -f /home/jenkins/app/hello_hapi_test1//docker-compose.yml -p master up -d] ...
+SSH: EXEC: connected
+Creating network "master_default" with the default driver
+Creating master_web-prod_1 ... 
+Creating master_web-prod_1 ... done
+SSH: EXEC: completed after 4 603 ms
+SSH: Disconnecting configuration [ubuntu-vps] ...
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (wait)
+[Pipeline] sh
++ sleep 5
+SSH: Transferred 0 ( 0 + 0 + 0 + 0 + 0 + 0 + 0 ) file(s)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (httpcheck)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] httpRequest
+HttpMethod: GET
+URL: http://167.71.11.147:4000/hello/user
+Sending request to url: http://167.71.11.147:4000/hello/user
+Response Code: HTTP/1.1 200 OK
+Success: Status code 200 is in the accepted range: 100:399
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
