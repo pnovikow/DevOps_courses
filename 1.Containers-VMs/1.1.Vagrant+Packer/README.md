@@ -9,6 +9,7 @@
 
 ```sh
 vagrant init ubuntu/bionic64
+vagrant plugin install vagrant-disksize
 vagrant up
 vagrant ssh
 ```
