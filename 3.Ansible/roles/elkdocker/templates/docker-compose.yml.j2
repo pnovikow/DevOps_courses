@@ -1,0 +1,49 @@
+version: '3.2'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    volumes:
+       - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+       - ./elasticsearch/data:/usr/share/elasticsearch/data:rw
+    environment:
+      ES_JAVA_OPTS: "-Xmx512m -Xms512m"
+      discovery.type: single-node
+      ELASTIC_PASSWORD: masteradmin
+#    ports:
+#      - "9200:9200"
+    networks:
+      - elk
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.10.0
+    volumes:
+       - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+       - ./logstash/pipline.conf://usr/share/logstash/pipeline/pipline.conf
+    ports:
+      - "5000:5000/udp"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.0
+    volumes:
+      - type: bind
+        source: ./kibana/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    ports:
+      - "5601:5601"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+networks:
+  elk:
+    driver: bridge

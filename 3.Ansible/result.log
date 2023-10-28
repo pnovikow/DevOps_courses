@@ -1,0 +1,189 @@
+john@johnlap:~/work/Itransition/DevOps_courses/3.Ansible$ ansible-playbook -i inventory_prod.var site_install.yml
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+
+PLAY [ab-haproxy] ****************************************************************************************************************************************************************
+
+TASK [common : COMMON - install packages and etc...] *****************************************************************************************************************************
+ok: [164.90.165.13] => {
+    "msg": "Start.."
+}
+
+TASK [common : COMMON - Set timezone to Europe/Moscow] ***************************************************************************************************************************
+The authenticity of host '164.90.165.13 (164.90.165.13)' can't be established.
+ED25519 key fingerprint is SHA256:eMkyM4FoaM8sXN5SeGB8vWck9b0V0SJ29YDzG+5Q88s.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? нуы
+Please type 'yes', 'no' or the fingerprint: yes
+changed: [164.90.165.13]
+
+TASK [common : COMMON - Update and upgrade apt packages] *************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [common : COMMON - Install required system packages] ************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13]
+
+TASK [common : COMMON -Crontab add sync time] ************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [haproxy : HAPROXY - create config file] ************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13]
+
+TASK [haproxy : HAPROXY - Enable service and ensure it is not masked] ************************************************************************************************************
+ok: [164.90.165.13]
+
+TASK [common : COMMON - install packages and etc...] *****************************************************************************************************************************
+ok: [164.90.165.13] => {
+    "msg": "Start.."
+}
+
+TASK [common : COMMON - Set timezone to Europe/Moscow] ***************************************************************************************************************************
+ok: [164.90.165.13]
+
+TASK [common : COMMON - Update and upgrade apt packages] *************************************************************************************************************************
+ok: [164.90.165.13]
+
+TASK [common : COMMON - Install required system packages] ************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+ok: [164.90.165.13]
+
+TASK [common : COMMON -Crontab add sync time] ************************************************************************************************************************************
+ok: [164.90.165.13]
+
+TASK [monit : MONIT - create config file] ****************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13] => (item={'src': 'monitrc.j2', 'dest': '/etc/monit/monitrc'})
+changed: [164.90.165.13] => (item={'src': 'monit_haproxy.conf.j2', 'dest': '/etc/monit/conf.d/monit_haproxy.conf'})
+changed: [164.90.165.13] => (item={'src': 'monit_docker.conf.j2', 'dest': '/etc/monit/conf.d/monit_docker.conf'})
+
+TASK [monit : MONIT - Enable service and ensure it is not masked] ****************************************************************************************************************
+ok: [164.90.165.13]
+
+TASK [rsyslog : RSYSlog - create rsyslog config file and restart rsyslog-server] *************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13] => (item={'src': 'rsyslog.conf.j2', 'dest': '/etc/rsyslog.conf'})
+changed: [164.90.165.13] => (item={'src': '49-haproxy.conf.j2', 'dest': '/etc/rsyslog.d/49-haproxy.conf'})
+changed: [164.90.165.13] => (item={'src': '01-json-template.conf.j2', 'dest': '/etc/rsyslog.d/01-json-template.conf'})
+
+TASK [elkdocker : ELK - Create a directory] **************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [elkdocker : ELK - Create a directory] **************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [elkdocker : ELK - Create a directory] **************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [elkdocker : ELK - Create a directory] **************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [elkdocker : ELK - Create a directory] **************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [elkdocker : ELK - copy configs file] ***************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13] => (item={'src': 'docker-compose.yml.j2', 'dest': '/root/elk/docker-compose.yml'})
+changed: [164.90.165.13] => (item={'src': 'elasticsearch.yml.j2', 'dest': '/root/elk/elasticsearch/elasticsearch.yml'})
+changed: [164.90.165.13] => (item={'src': 'kibana.yml.js', 'dest': '/root/elk/kibana/kibana.yml'})
+changed: [164.90.165.13] => (item={'src': 'logstash.yml.js', 'dest': '/root/elk/logstash/logstash.yml'})
+changed: [164.90.165.13] => (item={'src': 'pipline.conf.js', 'dest': '/root/elk/logstash/pipline.conf'})
+
+TASK [elkdocker : ELK - start compose] *******************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [elkdocker : ELK - Show results] ********************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+ok: [164.90.165.13] => {
+    "output.services.elasticsearch.elk_elasticsearch_1.state[\"status\"]": "running"
+}
+
+TASK [elkdocker : ELK - Show results] ********************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+ok: [164.90.165.13] => {
+    "output.services.kibana.elk_kibana_1.state[\"status\"]": "running"
+}
+
+TASK [elkdocker : ELK - Show results] ********************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+ok: [164.90.165.13] => {
+    "output.services.logstash.elk_logstash_1.state[\"status\"]": "running"
+}
+
+TASK [iptables : IPTABLES - drop 5601] *******************************************************************************************************************************************
+[WARNING]: The value "5601" (type int) was converted to "'5601'" (type string). If this does not look like what you expect, quote the entire value to ensure it does not change.
+changed: [164.90.165.13]
+
+TASK [iptables : IPTABLES - drop 2812] *******************************************************************************************************************************************
+[WARNING]: The value "2812" (type int) was converted to "'2812'" (type string). If this does not look like what you expect, quote the entire value to ensure it does not change.
+changed: [164.90.165.13]
+
+TASK [iptables : IPTABLES - drop 9200] *******************************************************************************************************************************************
+[WARNING]: The value "9200" (type int) was converted to "'9200'" (type string). If this does not look like what you expect, quote the entire value to ensure it does not change.
+changed: [164.90.165.13]
+
+TASK [getinfo : GETINFO getinfo file] ********************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [getinfo : GETINFO start bash script] ***************************************************************************************************************************************
+changed: [164.90.165.13]
+
+TASK [getinfo : GETINFO - donwload file from host to local] **********************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13]
+
+RUNNING HANDLER [haproxy : haproxyrestart] ***************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13]
+
+RUNNING HANDLER [monit : monitrestart] *******************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13]
+
+RUNNING HANDLER [rsyslog : rslogrestart] *****************************************************************************************************************************************
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/core.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+[WARNING]: Skipping plugin (/usr/lib/python3/dist-packages/ansible/plugins/filter/mathstuff.py) as it seems to be invalid: cannot import name 'environmentfilter' from
+'jinja2.filters' (/usr/local/lib/python3.10/dist-packages/jinja2/filters.py)
+changed: [164.90.165.13]
+
+PLAY RECAP ***********************************************************************************************************************************************************************
+164.90.165.13              : ok=34   changed=23   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+john@johnlap:~/work/Itransition/DevOps_courses/3.Ansible$ 

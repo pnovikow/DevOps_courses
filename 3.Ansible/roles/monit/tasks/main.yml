@@ -1,0 +1,16 @@
+- name: MONIT - create config file
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+  loop:
+    - { src: 'monitrc.j2', dest: '/etc/monit/monitrc' }
+    - { src: 'monit_haproxy.conf.j2', dest: '/etc/monit/conf.d/monit_haproxy.conf' }
+    - { src: 'monit_docker.conf.j2', dest: '/etc/monit/conf.d/monit_docker.conf' }
+  notify:
+    - monitrestart
+
+- name: MONIT - Enable service and ensure it is not masked
+  ansible.builtin.systemd:
+    name: monit
+    enabled: yes
+    masked: no

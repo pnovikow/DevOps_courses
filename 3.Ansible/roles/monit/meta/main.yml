@@ -1,0 +1,5 @@
+---
+dependencies:
+  - role: common
+    vars:
+      some_parameter: 3

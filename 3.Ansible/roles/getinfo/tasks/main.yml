@@ -1,0 +1,18 @@
+- name: GETINFO getinfo file
+  ansible.builtin.copy:
+    src: ./getinfo.sh
+    dest: /root/getinfo.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: GETINFO start bash script
+  shell: "/root/getinfo.sh | tee /tmp/host.ini"
+  ignore_errors: true
+
+- name: GETINFO - donwload file from host to local
+  ignore_errors: true
+  ansible.builtin.fetch:
+    src: /tmp/host.ini
+    dest: ./{{ ansible_ssh_host }}-host.ini
+    flat: yes

@@ -1,0 +1,35 @@
+global
+   #log /dev/log local0
+   #log /dev/log local1 notice
+   log 127.0.0.1:514  local0 info
+   chroot /var/lib/haproxy
+   stats timeout 30s
+   user haproxy
+   group haproxy
+   daemon
+
+defaults
+   log global
+   mode http
+   option httplog
+   option dontlognull
+   timeout connect 5000
+   timeout client 50000
+   timeout server 50000
+
+frontend http_k
+   bind *:8082
+
+   default_backend http_kibana
+
+frontend http_m
+   bind *:8083
+
+   default_backend http_monit
+
+
+backend http_kibana
+   server kibana01 127.0.0.1:{{ ha_backend01port }}
+
+backend http_monit
+   server monit01 127.0.0.1:{{ monit_admin_port }}

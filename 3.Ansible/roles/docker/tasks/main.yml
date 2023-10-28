@@ -1,0 +1,40 @@
+---
+- name: DOCKER - Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: DOCKER - Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: DOCKER - Configure Docker with the overlay or overlay2 storage driver
+  ansible.builtin.lineinfile:
+    path: "/etc/docker/daemon.json"
+    line: '{"storage-driver": "overlay2"}'
+    create: yes
+
+- name: DOCKER - Install Docker Compose (if configured).
+  get_url:
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64
+    dest: "/usr/local/bin/docker-compose"
+    mode: 0755
+
+- name: DOCKER - Update and upgrade apt packages
+  apt:
+    update_cache: yes
+    upgrade: 'yes'
+    cache_valid_time: 86400 #One day
+
+- name: DOCKER - Install required system packages
+  apt:
+    name:
+     - docker-ce
+    state: present
+
+- name: DOCKER - Enable service docker and ensure it is not masked
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+    masked: no

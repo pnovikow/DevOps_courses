@@ -1,0 +1,34 @@
+set daemon 120            
+    with start delay 10
+set log /var/log/monit.log
+set idfile /var/lib/monit/id
+set statefile /var/lib/monit/state
+set eventqueue
+    basedir /var/lib/monit/events
+    slots 100
+
+set httpd port {{ monit_admin_port }}
+    allow admin:UlsGTaein1
+
+check system $HOST
+     if loadavg (1min) > 4 then alert
+     if loadavg (5min) > 2 then alert
+     if memory usage > 75% then alert
+     if cpu usage (user) > 90% then alert
+     if cpu usage (system) > 40% then alert
+     if cpu usage (wait) > 20% then alert
+
+# Проверяем параметры корневой ФС
+check device rootfs with path /
+    group system
+    group server
+    if failed permission 755 then alert
+    if space usage > 90% for 5 times within 10 cycles then alert
+    if space usage > 99% then stop
+    if inode usage > 30% for 5 times within 10 cycles then alert
+    if inode usage > 50% then stop
+
+include /etc/monit/conf.d/*
+include /etc/monit/conf-enabled/*
+
+

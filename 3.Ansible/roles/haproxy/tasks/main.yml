@@ -1,0 +1,11 @@
+- name: HAPROXY - create config file
+  template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg backup=no owner=root group=root mode=0644
+  notify:
+    - haproxyrestart
+  
+
+- name: HAPROXY - Enable service and ensure it is not masked
+  ansible.builtin.systemd:
+    name: haproxy
+    enabled: yes
+    masked: no

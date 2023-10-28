@@ -1,0 +1,31 @@
+- name: IPTABLES - drop 5601
+  ansible.builtin.iptables:
+    chain: DOCKER-USER
+    protocol: tcp
+    destination_port: 5601
+    jump: DROP
+    in_interface: eth0
+    comment: DROP connection kibana
+  become: yes
+
+
+- name: IPTABLES - drop 2812
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 2812
+    jump: DROP
+    in_interface: eth0
+    comment: DROP connection monit
+  become: yes
+
+
+- name: IPTABLES - drop 5000
+  ansible.builtin.iptables:
+    chain: DOCKER-USER
+    protocol: tcp
+    destination_port: 5000
+    jump: DROP
+    in_interface: eth0
+    comment: DROP connection logstash
+  become: yes

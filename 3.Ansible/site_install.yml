@@ -1,0 +1,17 @@
+---
+- hosts: ab-haproxy
+  become: yes
+  gather_facts: false
+  vars:
+    apps_install: [mc,monit,ntpdate,haproxy,docker.io,docker-compose,net-tools]
+  vars_files:
+    - vars/ab-haproxy.yml
+  roles:
+    - { role: common, tags: ["install"] }
+    - { role: haproxy, tags: ["install"] }
+    - { role: monit, tags: ["install"] }
+    - { role: rsyslog, tags: ["install"] }
+    - { role: elkdocker, tags: ["install"] }
+    - { role: iptables, tags: ["install"] }
+    - { role: getinfo, tags: ["install"] }
+

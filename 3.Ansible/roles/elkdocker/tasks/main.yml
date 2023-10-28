@@ -1,0 +1,44 @@
+- name: ELK - Create a directory
+  file: path='/root/elk' state=directory mode='0744'
+
+- name: ELK - Create a directory
+  file: path='/root/elk/elasticsearch/' state=directory owner=1000 group=1000 mode='0744'
+
+- name: ELK - Create a directory
+  file: path='/root/elk/elasticsearch/data' state=directory  owner=1000 group=1000 mode='0764'
+
+- name: ELK - Create a directory
+  file: path='/root/elk/logstash' state=directory mode='0744'
+
+- name: ELK - Create a directory
+  file: path='/root/elk/kibana' state=directory mode='0744'
+
+- name: ELK - copy configs file
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+  loop:
+    - { src: 'docker-compose.yml.j2', dest: '/root/elk/docker-compose.yml' }
+    - { src: 'elasticsearch.yml.j2', dest: '/root/elk/elasticsearch/elasticsearch.yml' }
+    - { src: 'kibana.yml.js', dest: '/root/elk/kibana/kibana.yml' }
+    - { src: 'logstash.yml.js', dest: '/root/elk/logstash/logstash.yml' }
+    - { src: 'pipline.conf.js', dest: '/root/elk/logstash/pipline.conf' }
+
+
+- name: ELK - start compose
+  community.docker.docker_compose:
+    project_src: /root/elk/
+    files:
+    - docker-compose.yml
+  register: output 
+
+- name: ELK - Show results
+  ansible.builtin.debug:
+    var: output.services.elasticsearch.elk_elasticsearch_1.state["status"]
+- name: ELK - Show results
+  ansible.builtin.debug:
+    var: output.services.kibana.elk_kibana_1.state["status"]
+- name: ELK - Show results
+  ansible.builtin.debug:
+    var: output.services.logstash.elk_logstash_1.state["status"]
+

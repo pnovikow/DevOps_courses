@@ -1,0 +1,34 @@
+input {
+    udp {
+      host => "127.0.0.1"
+      port => "10514"
+      codec => "json"
+      type => "rsyslog"
+    }
+}
+  
+  # This is an empty filter block.  You can later add other filters here to further process
+  # your log lines
+  
+filter { 
+  json {
+    source => "message"
+    skip_on_invalid_json => true
+    }
+
+
+}
+  
+  # This output block will send all events of type "rsyslog" to Elasticsearch at the configured
+  # host and port into daily indices of the pattern, "rsyslog-YYYY.MM.DD"
+  
+output {
+   if [type] == "rsyslog" {
+     elasticsearch {
+       hosts => [ "localhost:9200" ]
+       index => "rsyslog-%{+YYYY.MM.dd}"
+       user => "elasticuser"
+       password => "strongpassword"
+     }
+   }
+}

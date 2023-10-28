@@ -1,0 +1,15 @@
+check process haproxy with pidfile /run/haproxy.pid
+   group haproxy
+   start program = "/etc/init.d/haproxy start"
+   stop  program = "/etc/init.d/haproxy stop"
+   if failed host localhost port 8082 protocol http with timeout 10 seconds for 2 times within 2 cycles then restart
+   depend haproxy_bin
+   depend haproxy_rc
+ 
+check file haproxy_bin with path /usr/sbin/haproxy
+   group haproxy
+   include /etc/monit/templates/rootbin
+ 
+check file haproxy_rc with path /etc/init.d/haproxy
+   group haproxy
+   include /etc/monit/templates/rootbin

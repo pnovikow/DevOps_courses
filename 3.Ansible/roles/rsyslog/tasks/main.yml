@@ -1,0 +1,10 @@
+- name: RSYSlog - create rsyslog config file and restart rsyslog-server
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+  loop:
+    - { src: 'rsyslog.conf.j2', dest: '/etc/rsyslog.conf' }
+    - { src: '49-haproxy.conf.j2', dest: '/etc/rsyslog.d/49-haproxy.conf' }
+    - { src: '01-json-template.conf.j2', dest: '/etc/rsyslog.d/01-json-template.conf' }
+  notify:
+    - rslogrestart

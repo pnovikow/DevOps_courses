@@ -1,0 +1,36 @@
+---
+- name: COMMON - install packages and etc...
+  ansible.builtin.debug:
+    msg: "Start.."
+
+- name: COMMON - Set timezone to Europe/Moscow
+  timezone:
+    name: Europe/Moscow
+
+#- name: COMMON - Add Ubuntu  Repository
+#  apt_repository:
+#    repo: deb http://ru.archive.ubuntu.com/ubuntu/ bionic universe
+#    state: present
+
+- name: COMMON - Update and upgrade apt packages
+  apt:
+    update_cache: yes
+    upgrade: 'yes'
+    cache_valid_time: 186400 #2days
+
+- name: COMMON - Install required system packages
+  apt: name={{ apps_install }} state=present cache_valid_time=86400
+
+
+- name: COMMON -Crontab add sync time
+  cron:
+    name: "time"
+    state: present
+    minute: "*"
+    hour: "23"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "ntpdate time1.google.com > /dev/null"
+
+
