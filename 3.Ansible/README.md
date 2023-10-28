@@ -1,5 +1,5 @@
 # Ansible
-
+![This is a alt text.](./drowio.png "This is a sample image.")
 #### Запуск:
 ```
 ansible-playbook -i inventory_prod.var site_install.yml
@@ -21,3 +21,19 @@ host_avtor:ivanlvov
 1) **monit** - настройка мониторинга system - docker - haproxy
 1) **rsyslog** - отправка логов с haproxy на 500 порт logstash
 1) **getinfo** - файл host.ini
+
+
+
+![This is a alt text.](./monit_all.png "This is a sample image.")
+
+![This is a alt text.](./monit_docker01.png "This is a sample image.")
+
+![This is a alt text.](./monit_haproxy01.png "This is a sample image.")
+
+![This is a alt text.](./monit_system01.png  "This is a sample image.")
+
+---
+
+![This is a alt text.](./ELK01.png  "This is a sample image.")
+
+![This is a alt text.](./ELK02.png  "This is a sample image.")
