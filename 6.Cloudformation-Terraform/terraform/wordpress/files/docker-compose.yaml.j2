@@ -1,0 +1,10 @@
+version: "3"
+services:
+  client:
+    image: johnnybravo6/aws_gatsby:latest
+    restart: always
+ #   volumes:
+ #     - ./gatsby-starter-hello-world/src:/app/src # Links the source files to the running container
+    ports:
+      - "8080:8000"
+    command: gatsby develop -H 0.0.0.0

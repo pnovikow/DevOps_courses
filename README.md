@@ -7,3 +7,5 @@
 4) :white_check_mark: 3.Ansible **(tasks: 4.*)**
 5) :white_check_mark: 4.Linux **(tasks: 5.*)**
 6) :white_check_mark: 5.AWS 
+7) :white_circle: 7.Azure
+8) :white_check_mark: 6.Cloudformation-Terraform **(tasks: 9.*)**
