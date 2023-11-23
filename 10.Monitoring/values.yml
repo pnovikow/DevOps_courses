@@ -1,0 +1,50 @@
+
+server:
+  persistentVolume:
+    #size: 4Gi
+    volumeName: prometheus-pv-01
+#  service:
+#    retention: "4d"
+#    retentionSize: "6GB"
+
+serverFiles:
+  ## Alerts configuration
+  ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+  alerting_rules.yml: 
+    groups:
+    - name: example
+      rules:
+      - alert: HostOutOfMemory
+        expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 95) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Host out of memory (instance {{ $labels.instance }})
+          description: "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          
+      - alert: KubernetesNodeNotReady
+        expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes Node not ready (instance {{ $labels.instance }})
+          description: "Node {{ $labels.node }} has been unready for a long time\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: KubernetesJobFailed
+        expr: kube_job_status_failed > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Kubernetes Job failed (instance {{ $labels.instance }})
+          description: "Job {{ $labels.namespace }}/{{ $labels.job_name }} failed to complete\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+ 
+
+alertmanager:
+  enabled: true
+
+  persistence:
+    volumeName: prometheus-pv-alert
+    

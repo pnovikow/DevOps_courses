@@ -1,0 +1,28 @@
+persistence:
+  size: 1Gi
+volumePermissions:
+ 
+  enabled: true
+mariadb:
+  ## @param mariadb.enabled Deploy a MariaDB server to satisfy the applications database requirements
+  ## To use an external database set this to false and configure the `externalDatabase.*` parameters
+  ##
+  enabled: false
+
+ 
+externalDatabase:
+  ## @param externalDatabase.host External Database server host
+  ##
+  host: bitnamiwordpress.cwjirezctx5q.eu-central-1.rds.amazonaws.com
+  ## @param externalDatabase.port External Database server port
+  ##
+  port: 3306
+  ## @param externalDatabase.user External Database username
+  ##
+  user: user
+  ## @param externalDatabase.password External Database user password
+  ##
+  password: "MMM"
+  ## @param externalDatabase.database External Database database name
+  ##
+  database: wordpressdata

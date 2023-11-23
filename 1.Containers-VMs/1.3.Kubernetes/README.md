@@ -2,6 +2,21 @@
 # Задача 2.6: Знакомство с Kubernetes и Minikube
 https://kubernetes.io/ru/docs/reference/kubectl/cheatsheet/
 
+
+#### Реализовано в задании **10-Мониторинг**
+File_code:  **NEW_first_pod.yml**
+
+Можно посмотреть тут:
+
+https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/hello/user
+
+![This is a alt text.](./screen_hello.png "This is a sample image.")
+
+
+
+
+## Все что ниже делал давно, образа johnnybravo6/testnpm:master уже нету
+### Task:
 Создал в файле свой первый pod. Использую свой образ `johnnybravo6/firs-test:0` из предыдущего задания с flask. 
 
 Командой expose создан сервис, что бы под был доступен из вне

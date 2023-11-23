@@ -1,0 +1,23 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent {
+        label 'master || built-in'
+    }
+    stages {
+
+        stage('Docker_prepare') {
+            steps {
+                echo 'switching to docker context'
+                sh 'docker context use my-remote-engine'
+            }
+        }
+        stage('Docker_run') {
+            steps {
+                echo 'Starting...'
+                sh 'docker run hello-world'
+            }
+        }
+    }
+
+}

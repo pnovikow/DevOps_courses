@@ -1,0 +1,22 @@
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: 'http://10.233.2.152:80'
+      access: proxy
+      isDefault: true
+
+persistence:
+  type: pvc
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  volumeName: grafana-pv-01
+
+grafana.ini:
+  server:
+    root_url: 'http://3.77.183.40:9090/grafana/'
+    serve_from_sub_path: true

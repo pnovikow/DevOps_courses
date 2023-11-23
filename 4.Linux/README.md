@@ -1,8 +1,20 @@
 # Категория Nginx/Apache (1-6)
 Извиняюсь, тут ничего не понял что и куда должно проксировать в итоге
 
-Попробую через пару дней еще раз понять
+#### -Установить Minikube, Helm. Установить bitnami/wordpress helm chart - в 10 задании про мониторинг
 
+https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/
+
+Скрыть версии apache, nginx, php на серверах, используемых для выполнения:
+```
+http {
+    server_tokens off;
+}
+```
+```
+php.ini
+expose_php = Off
+```
 # Категория Linux 7
 
 #### Создаем пустой бинарный файл
