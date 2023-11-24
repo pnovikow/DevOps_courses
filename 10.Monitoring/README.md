@@ -297,3 +297,25 @@ https://upcloud.com/resources/tutorials/deploy-kubernetes-dashboard
   204  kubectl apply -f kube-dash-depl.yml 
 ```
 
+
+
+## Kubernetes Incident 24.11
+
+На VM закончилось место и ресурсы, пришлось разнести поды с привязкой к нодам.
+
+`patch_all.yml`
+
+```
+kubectl label node node2 nazvanie=node2 
+kubectl label node node3 nazvanie=node3 
+kubectl label node node4 nazvanie=node4
+```
+
+```
+kubectl patch deployment prometheus-1700740253-server --patch-file patch02.yml 
+kubectl describe deployments.apps prometheus-1700740253-server
+
+kubectl patch deployment grafana-1700741226 --patch-file patch01.yml
+kubectl describe deployments.apps grafana-1700741226
+```
+
