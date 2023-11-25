@@ -15,32 +15,10 @@ https://github.com/kubernetes-sigs/kubespray
 1) https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/grafana/
 1) https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/prometheus/graph
 
-#### Задача 2.6:
-Из задания Задача 2.6: Знакомство с Kubernetes и Minikube
-
-`kubectl apply -f first_pod.yml`
-1) https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/hello/user
-
-![This is a alt text.](./screen_hello.png "This is a sample image.")
-
-
-
-
-```
-root@node0:~# kubectl get nodes -o wide
-NAME    STATUS   ROLES           AGE     VERSION   INTERNAL-IP 
-node1   Ready    control-plane   6h30m   v1.28.3   10.0.23.45 
-node2   Ready    <none>          6h29m   v1.28.3   10.0.64.46 
-node3   Ready    <none>          6h29m   v1.28.3   10.0.74.226 
-node4   Ready    <none>          6h29m   v1.28.3   10.0.64.80 
-
-```
-
-
 
 
 ### 1) Установка prometheus
-Для установки helm chart были сделано:
+Для установки helm chart было сделано:
 
 1) Подготовка pc (файл pv_1.yml)
 1) переопределены vars в values.yml
@@ -59,7 +37,7 @@ helm uninstall prometheus-****
 ### 2) Установка grafana
 
 ![This is a alt text.](./screen_01.png "This is a sample image.")
-Для установки helm chart были сделано:
+#### Для установки helm chart было сделано:
 
 1) Подготовка pc (файл pv_1.yml)
 ```
@@ -78,9 +56,8 @@ spec:
   hostPath:
     path: "/mnt/data/grafana01"
 ```
-1) переопределены vars в grafana-val.yml
+2) переопределены vars в grafana-val.yml
 
-#### Команды:
 ```
 kubectl get secret --namespace default grafana-1700741226 -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
@@ -92,11 +69,11 @@ helm upgrade -f grafana-val.yml grafana-1700591892 grafana/grafana
 
 ### Задача 2: Создание Дашборда в Grafana
 
-1) Мой Дашборд TASK:
+1) Мой dashboard TASK (`/json_dashboards/K8 TASK_my.json`):
 
 https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/grafana/d/a3cdd8ce-4cd9-4457-b97d-722ac8702822/task?orgId=1
 
-1) Импортные:
+1) From internet:
 
 https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/grafana/d/k8s_views_nodes/kubernetes-views-nodes?orgId=1&refresh=30s
 
@@ -110,13 +87,35 @@ https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/grafana/d/k8s_views_p
 
 
 ### Задача 3: Создание Алертов в Prometheus и Интеграция с Grafana
+#### В файл values.yml добавлены правила в раздел alerting_rules.yml
+```
+serverFiles:
+  ## Alerts configuration
+  ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+  alerting_rules.yml: 
+    groups:
+    - name: example
+      rules:
+      - alert: HostOutOfMemory
+        expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 95) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Host out of memory (instance {{ $labels.instance }})
+          description: "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+```
 ![This is a alt text.](./screen_02.png "This is a sample image.")
 
 
 
 ### Задача 4: Масштабирование Minikube и Мониторинг с Prometheus
 
-Сделал тут задание  - 5 Дополнительные практические задания - установка wordpress
+
+
+
+
+### 5 Дополнительные практические задания - установка wordpress
 
 
 ![This is a alt text.](./screen_03.png "This is a sample image.")
@@ -126,9 +125,11 @@ https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/grafana/d/k8s_views_p
 mysql -u admin -p -h bitnamiwordpress.cwjirezctx5q.eu-central-1.rds.amazonaws.com
 SHOW DATABASES;
 CREATE DATABASE wordpressdata;
-
 create user 'user'@'%' identified by '********';
 grant all privileges on wordpressdata.* TO 'user'@'%';
+
+Сброс пароля
+UPDATE wp_users SET user_pass = md5('new_password') WHERE ID = 1;
 ```
 
 ## Bitnami package for WordPress
@@ -136,23 +137,40 @@ grant all privileges on wordpressdata.* TO 'user'@'%';
 https://github.com/bitnami/charts/tree/main/bitnami/wordpress/#installing-the-chart
 
 Сервис:
-https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/
+
+1) https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/
 
 
-1) Подготовлен файл **wordpress-var.yml**
-
+#### Подготовлен файл **wordpress-var.yml**
 
 
 ```
 helm install my-release -f wordpress_val.yml  oci://registry-1.docker.io/bitnamicharts/wordpress
-
 helm uninstall my-release
-
 ```
 
 
 
 
+
+
+#### Задача 2.6:
+Из задания Задача 2.6: Знакомство с Kubernetes и Minikube
+
+`kubectl apply -f first_pod.yml`
+1) https://ec2-3-77-183-40.eu-central-1.compute.amazonaws.com/hello/user
+
+![This is a alt text.](./screen_hello.png "This is a sample image.")
+
+```
+root@node0:~# kubectl get nodes -o wide
+NAME    STATUS   ROLES           AGE     VERSION   INTERNAL-IP 
+node1   Ready    control-plane   6h30m   v1.28.3   10.0.23.45 
+node2   Ready    <none>          6h29m   v1.28.3   10.0.64.46 
+node3   Ready    <none>          6h29m   v1.28.3   10.0.74.226 
+node4   Ready    <none>          6h29m   v1.28.3   10.0.64.80 
+
+```
 
 
 
@@ -243,16 +261,6 @@ default     statefulset.apps/prometheus-1700740253-alertmanager   1/1     6h42m
 
 
 
-
-### подключение к контейнеру
-```bash
-# kubectl exec -it nginx-flask-56c74c56f-lp2w8 /bin/bash
-kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
-root@nginx-flask-56c74c56f-lp2w8:/srv/flask_app# ^
-```
-
-
-
 ### ansible zone 
 https://habr.com/ru/articles/725640/
 ```
@@ -281,12 +289,9 @@ node2
 node3
 node4
 
-
-
 ```
 
 
-для меня, деплой дашборда
 ## Dashboard k8s
 
 https://upcloud.com/resources/tutorials/deploy-kubernetes-dashboard
@@ -303,7 +308,7 @@ https://upcloud.com/resources/tutorials/deploy-kubernetes-dashboard
 
 На VM закончилось место и ресурсы, пришлось разнести поды с привязкой к нодам.
 
-`patch_all.yml`
+Файл: `patch_all.yml`
 
 ```
 kubectl label node node2 nazvanie=node2 
