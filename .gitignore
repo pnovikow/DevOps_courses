@@ -27,3 +27,14 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
+1.Containers-VMs/1.1.Vagrant+Packer/dev_rsa
+1.Containers-VMs/1.1.Vagrant+Packer/dev_rsa.pub
+1.Containers-VMs/1.1.Vagrant+Packer/ubuntu-bionic-18.04-cloudimg-console.log
+1.Containers-VMs/1.1.Vagrant+Packer/vagrant_rsa
+1.Containers-VMs/1.1.Vagrant+Packer/vagrant_rsa.pub
+10.Monitoring/my_readme.md
+3.Ansible/vagrant_rsa
+3.Ansible/vagrant_rsa.pub
+5.AWS/key
+6.Cloudformation-Terraform/terraform/.terraform.lock.hcl
+10.Monitoring/my_readme.md

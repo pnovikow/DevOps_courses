@@ -1,0 +1,44 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: service-flask
+  name: service-flask
+spec:
+  ports:
+    - port: 9871
+      targetPort: 5000
+  selector:
+    app: flaskpod
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskapp
+  labels:
+    app: flaskapp
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: flaskpod
+  template:
+    metadata:
+      labels:
+        app: flaskpod
+    spec:
+      containers:
+      - name: flaskpor
+        image: banoleb666/flask-first:latest
+        ports:
+        - containerPort: 5000
+      affinity:
+        podAntiAffinity:
+           requiredDuringSchedulingIgnoredDuringExecution:
+             - labelSelector:
+                 matchExpressions:
+                   - key: "app"
+                     operator: In
+                     values:
+                     - flaskpod
+               topologyKey: "kubernetes.io/hostname"
